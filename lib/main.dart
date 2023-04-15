@@ -18,7 +18,9 @@ void main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
-  runApp(const MyApp());
+  runApp(MultiProvider(providers: [
+    ChangeNotifierProvider(create: (_) => CardProvider()),
+  ],child: const MyApp()));
 }
 
 class MyApp extends StatelessWidget {
@@ -26,15 +28,7 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MultiProvider(
-      providers: [
-        ChangeNotifierProvider(
-          create: (context) {
-            CardProvider();
-          },
-        )
-      ],
-      child: MaterialApp(
+    return  MaterialApp(
         themeMode: ThemeMode.system,
         theme: ThemeData(
           colorSchemeSeed: Colors.blueAccent,
@@ -42,8 +36,8 @@ class MyApp extends StatelessWidget {
         ),
         debugShowCheckedModeBanner: false,
         home: MainPage(),
-      ),
-    );
+      );
+    // );
   }
 }
 
